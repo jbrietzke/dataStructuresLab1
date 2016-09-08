@@ -46,7 +46,6 @@ HugeInteger::HugeInteger(string newTotal)
    {
       digitsArray[j] = newTotal[i] - '0';
    }
-   display(cout);
 }
 
 HugeInteger::~HugeInteger()
@@ -121,6 +120,12 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
    HugeInteger result(summedNumberString);
    return result;
 
+}
+
+HugeInteger HugeInteger::operator*(const HugeInteger &op2)
+{
+   HugeInteger result;
+   return result;
 }
 
 // istream &operator>>(istream &input, HugeInteger &largeObject)

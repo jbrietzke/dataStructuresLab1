@@ -26,6 +26,7 @@ class HugeInteger
         left side
       */
       HugeInteger operator+(const HugeInteger &);
+      HugeInteger operator*(const HugeInteger &);
    private:
       //const long MAXDIGITS;
       // static const has to exist before member initializer in constructor

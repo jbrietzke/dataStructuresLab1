@@ -9,6 +9,7 @@ int main()
    cin >> bigNumberX >> bigNumberY;
    cout << bigNumberX << endl << bigNumberY << endl;
    HugeInteger bigNumberZ = bigNumberX + bigNumberY;
+   cout << bigNumberZ;
    return 0;
 }
 
