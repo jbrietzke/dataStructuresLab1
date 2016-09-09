@@ -37,14 +37,19 @@ HugeInteger::HugeInteger(int a[], int s)
       sigDigits++;
    }
 }
-
-HugeInteger::HugeInteger(string newTotal)
+// This constructor is getting the string in  the reverse order
+HugeInteger::HugeInteger(string reversedNewTotal)
 {
+   for (int i = 0; i < 40; ++i)
+   {
+      digitsArray[i] = 0;
+   }
    cout << "I am in the String constructor\n";
-   sigDigits = newTotal.length();
+   sigDigits = reversedNewTotal.length();
    for (int i = sigDigits-1, j = 0; i >= 0; --i, j++)
    {
-      digitsArray[j] = newTotal[i] - '0';
+      digitsArray[j] = reversedNewTotal[i] - '0';
+      cout << "This has been entered into digitsArray:  " << digitsArray[j] << endl;
    }
 }
 
@@ -56,6 +61,17 @@ HugeInteger::~HugeInteger()
 void HugeInteger::getSize()
 {
    cout << MAXDIGITS << endl;
+}
+
+string HugeInteger::getDigits()
+{
+   string result = "";
+   for (int i = 0; i < sigDigits; ++i)
+   {
+      cout << sigDigits << endl;
+      result += digitsArray[i] + '0';
+   }
+   return result;
 }
 
 void HugeInteger::display(ostream &output) const
@@ -78,6 +94,7 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
    string summedNumberString = "";
    int carryOver = 0;
    int biggestInt = (sigDigits >= op2.sigDigits) ? sigDigits : op2.sigDigits;
+   cout << "What is the biggestInt: " << biggestInt << endl;
    int mySigDigs = sigDigits;
    int otherSigDigs = op2.sigDigits;
    int summedNumber[biggestInt+1];
@@ -90,8 +107,25 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
    cout << "This is the biggestInt: " << biggestInt << endl;
    for (int i = biggestInt-1, j = 0, k = mySigDigs-1, m = otherSigDigs-1; i >= -1; i--, j++, k--, m--)
    {
-      int individualPlaceValue = digitsArray[k] + op2.digitsArray[m] + carryOver;
+      int individualPlaceValue;
+      if (k < 0 && m >= 0)
+      {
+         individualPlaceValue = op2.digitsArray[m] + carryOver;
+      }else if(m < 0 && k >= 0)
+      {
+         individualPlaceValue = digitsArray[k] + carryOver;
+      }else if(k < 0 && m < 0)
+      {
+         individualPlaceValue = carryOver;
+      }else
+      {
+         individualPlaceValue = digitsArray[k] + op2.digitsArray[m] + carryOver;
+      }
       cout << "What is the individualPlaceValue: " << individualPlaceValue << endl;
+      cout << "This is the value of digitsArray[k]:  " << digitsArray[k] << endl;
+      cout << "This is the value of digitsArray[m]:  " << op2.digitsArray[m] << endl;
+      cout << "This is the carryOver value:  " << carryOver << endl;
+
       if (individualPlaceValue >= 10)
       {
          cout << "This if statement is being hit\n";
