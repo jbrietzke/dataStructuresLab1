@@ -16,7 +16,7 @@ class HugeInteger
       HugeInteger();
       HugeInteger(int);
       HugeInteger(int a[], int s);
-      HugeInteger(string);
+      HugeInteger(string, bool);
       ~HugeInteger();
       void getSize();
       void setSize();
