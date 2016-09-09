@@ -20,7 +20,9 @@ class HugeInteger
       ~HugeInteger();
       void getSize();
       void setSize();
+      string change(string);
       string getDigits();
+
       /*This doesn;t need to be public because we are going to overload
         void display();
         overloading the '+' operator within the public because it is on the

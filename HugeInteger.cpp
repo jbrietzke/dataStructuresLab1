@@ -74,6 +74,16 @@ string HugeInteger::getDigits()
    return result;
 }
 
+string HugeInteger::change(string reversedString)
+{
+   string newString = "";
+   for (int i = reversedString.length()-1; i >= 0; --i)
+   {
+      newString += reversedString[i];
+   }
+   return newString;
+}
+
 void HugeInteger::display(ostream &output) const
 {
    output << "sigDigits == " << sigDigits << endl
