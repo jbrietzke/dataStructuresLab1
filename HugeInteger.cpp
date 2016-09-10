@@ -70,6 +70,7 @@ void HugeInteger::getSize()
 string HugeInteger::getDigits()
 {
    string result = "";
+   cout << "this is the sigDigits: " << sigDigits << endl;
    for (int i = 0; i < sigDigits; ++i)
    {
       cout << sigDigits << endl;
@@ -158,10 +159,82 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
    return result;
 
 }
-
+//This only works if the left side number is smaller
 HugeInteger HugeInteger::operator*(const HugeInteger &op2)
 {
-   HugeInteger result;
+   int carryOver = 0;
+   int individualPlaceValue;
+   const int SIZE = 40;
+   string linesToBeAdded[SIZE];
+   string individualNumber = "";
+   for (int i = sigDigits-1, digitSpot = 0; i >= 0; --i, digitSpot++)
+   {
+      for (int i = 0; i < digitSpot; ++i)
+      {
+         individualNumber += "0";
+      }
+      for (int j = op2.sigDigits-1; j >= -1; --j)
+      {
+            int value = -9999;
+            if (i < 0 && j >= 0)
+            {
+               cout << "Here\n";
+               value = op2.digitsArray[j] + carryOver;
+            }else if(j < 0 && i >= 0 && carryOver > 0)
+            {
+               value = carryOver;
+            }else if(i < 0 && j < 0)
+            {
+               cout << "HereHereHere\n";
+               value = carryOver;
+            }else
+            {
+               cout << "DEFDFHERE\n";
+               value = digitsArray[i] * op2.digitsArray[j] + carryOver;
+               cout << "Here is the val: " << digitsArray[i] << '\t'<< op2.digitsArray[j]<< '\t' << carryOver << endl;
+            }
+            if (value >= 10)
+            {
+               individualPlaceValue = value % 10;
+               carryOver = value / 10;
+            }else
+            {
+               individualPlaceValue = value;
+               carryOver = 0;
+            }
+            if (individualPlaceValue > 0)
+            {
+               individualNumber += individualPlaceValue + '0';
+            }else
+            {
+               individualNumber += "0";
+            }
+
+      }
+      linesToBeAdded[i] = individualNumber;
+      individualNumber = "";
+      char lastDigit = linesToBeAdded[i].back();
+      if (lastDigit == '0')
+      {
+         cout << "The lastDigit is indeed getting hit\n\n";
+         cout << linesToBeAdded[i] << " That was before trimming\n";
+         linesToBeAdded[i]=linesToBeAdded[i].substr(0,sigDigits+digitSpot);
+         cout << linesToBeAdded[i] << " That is after trimming\n";
+      }
+   }
+   cout << "This is what the linesToBeAdded[0] looks like " << linesToBeAdded[0] << endl;
+   cout << "This is what the linesToBeAdded[1] looks like " << linesToBeAdded[1] << endl;
+   string holderString;
+   if (linesToBeAdded[1] == "")
+   {
+      holderString = "0";
+   }else
+   {
+      holderString = linesToBeAdded[1];
+   }
+   HugeInteger x(linesToBeAdded[0], false);
+   HugeInteger y(holderString, false);
+   HugeInteger result = x + y;
    return result;
 }
 
