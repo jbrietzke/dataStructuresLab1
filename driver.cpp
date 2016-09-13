@@ -4,14 +4,16 @@
 using namespace std;
 int main()
 {
-   HugeInteger bigNumberX;
-   HugeInteger bigNumberY;
-   cin >> bigNumberX >> bigNumberY;
-   cout << bigNumberX * bigNumberY;
+   HugeInteger bigNumberX("1", true);
+   HugeInteger bigNumberY("510", true);
+   // cin >> bigNumberX >> bigNumberY;
+   // cout << bigNumberX * bigNumberY;
    // cin >> bigNumberX >> bigNumberY;
    // cout << bigNumberX << endl << bigNumberY << endl;
    // HugeInteger bigNumberZ = bigNumberX + bigNumberY;
    // cout << bigNumberZ;
+   bool isZ = bigNumberX.isZero();
+   cout << isZ << endl;
    return 0;
 }
 
