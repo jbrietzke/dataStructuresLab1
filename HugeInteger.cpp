@@ -113,7 +113,8 @@ string HugeInteger::change(string reversedString)
 
 void HugeInteger::display(ostream &output) const
 {
-   output << "sigDigits == " << sigDigits << endl;
+   output << "It has this many significant digits: " << sigDigits << endl;
+   output << "The number is: ";
    for (int i = 0; i < sigDigits; ++i)
    {
       output << digitsArray[i];
@@ -407,12 +408,12 @@ bool HugeInteger::isZero()
 istream &operator>>(istream &input, HugeInteger &largeObject)
 {
    string x;
-   cout << "Please enter your huge integer here: ";
    input >> x;
    for (int i = 0; i < x.length(); ++i)
    {
       if (!isdigit(x[i]))
       {
+         cout << "You made a mistake and entered a letter in a number\n";
          break;
       }
       largeObject.digitsArray[i] = x[i] - '0';

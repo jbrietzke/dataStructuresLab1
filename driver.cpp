@@ -4,36 +4,35 @@
 using namespace std;
 int main()
 {
-   string op1, op2, op;
+   string op;
+   HugeInteger op1, op2;
    cout << "Please enter an equation with spaces: \n";
    cin >> op1 >> op >> op2;
-   HugeInteger num1(op1, true);
-   HugeInteger num2(op2, true);
    HugeInteger result;
    bool answer;
    if (op == "+")
    {
-      result = num1 + num2;
+      result = op1 + op2;
       cout << "Plus\n";
    }else if (op == "*")
    {
-      result = num1 * num2;
+      result = op1 * op2;
       cout << "Times\n";
    }else if (op == ">=")
    {
-      answer = num1 >= num2;
+      answer = op1 >= op2;
       cout << "Greater\n";
    }else if (op == "<=")
    {
-      answer = num1 <= num2;
+      answer = op1 <= op2;
       cout << "Lesser\n";
    }else if (op == "!=")
    {
-      answer = num1 != num2;
+      answer = op1 != op2;
       cout << "notEqual\n";
    }else if (op == "==")
    {
-      answer = num1 == num2;
+      answer = op1 == op2;
       cout << "equal\n";
    }else
    {
