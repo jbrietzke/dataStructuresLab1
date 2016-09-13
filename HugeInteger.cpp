@@ -360,6 +360,44 @@ bool HugeInteger::operator!=(const HugeInteger &op2)
    return !(HugeInteger::operator==(op2));
 }
 
+bool HugeInteger::operator>=(const HugeInteger &op2)
+{
+   bool isBigger = false;
+   if (sigDigits > op2.sigDigits)
+   {
+      isBigger = true;
+   }else if (sigDigits == op2.sigDigits)
+   {
+      for (int i = 0; i < sigDigits; ++i)
+      {
+         if (digitsArray[i] > op2.digitsArray[i])
+         {
+            isBigger = true;
+            break;
+         }else if (digitsArray[i] < op2.digitsArray[i])
+         {
+            isBigger = false;
+            break;
+         }
+      }
+      if (!isBigger)
+      {
+         isBigger = HugeInteger::operator==(op2);
+      }
+   }
+   return isBigger;
+}
+
+bool HugeInteger::operator<=(const HugeInteger &op2)
+{
+   bool isSmaller = !HugeInteger::operator>=(op2);
+   if (!isSmaller)
+   {
+      isSmaller = HugeInteger::operator==(op2);
+   }
+   return isSmaller;
+}
+
 istream &operator>>(istream &input, HugeInteger &largeObject)
 {
    string x;

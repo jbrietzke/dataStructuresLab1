@@ -4,16 +4,16 @@
 using namespace std;
 int main()
 {
-   HugeInteger bigNumberX("154", true);
-   HugeInteger bigNumberY("154", true);
+   HugeInteger bigNumberX("511", true);
+   HugeInteger bigNumberY("510", true);
    // cin >> bigNumberX >> bigNumberY;
    // cout << bigNumberX * bigNumberY;
    // cin >> bigNumberX >> bigNumberY;
    // cout << bigNumberX << endl << bigNumberY << endl;
    // HugeInteger bigNumberZ = bigNumberX + bigNumberY;
    // cout << bigNumberZ;
-   bool isEqual = bigNumberX != bigNumberY;
-   cout << "Are they unequal: " << isEqual << endl;
+   bool isBigger = bigNumberX <= bigNumberY;
+   cout << isBigger << endl;
    return 0;
 }
 
