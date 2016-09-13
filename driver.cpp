@@ -4,10 +4,11 @@
 using namespace std;
 int main()
 {
-   string blah1, blah2, op;
-   cin >> blah1 >> op >> blah2;
-   HugeInteger num1(blah1, true);
-   HugeInteger num2(blah2, true);
+   string op1, op2, op;
+   cout << "Please enter an equation with spaces: \n";
+   cin >> op1 >> op >> op2;
+   HugeInteger num1(op1, true);
+   HugeInteger num2(op2, true);
    HugeInteger result;
    bool answer;
    if (op == "+")
@@ -39,6 +40,16 @@ int main()
       cout << "In later additions of the lab this will be available\n";
    }
    cout << result << endl;
+
+   // string bigBoi;
+   // string delim = " ";
+   // cin >> bigBoi;
+   // cout << "This is bigBoi: " << bigBoi << endl;
+
+   // string token1 = bigBoi.substr(0, bigBoi.find(delim));
+   // cout << "This is token1: " << token1 << endl;
+   // cout << "This is bigBoi: " << bigBoi << endl;
+
    return 0;
 }
 
