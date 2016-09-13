@@ -35,6 +35,7 @@ class HugeInteger
       bool operator!=(const HugeInteger &);
       bool operator>=(const HugeInteger &);
       bool operator<=(const HugeInteger &);
+      bool isZero();
    private:
       //const long MAXDIGITS;
       // static const has to exist before member initializer in constructor

@@ -4,7 +4,7 @@
 using namespace std;
 int main()
 {
-   HugeInteger bigNumberX("511", true);
+   HugeInteger bigNumberX("1", true);
    HugeInteger bigNumberY("510", true);
    // cin >> bigNumberX >> bigNumberY;
    // cout << bigNumberX * bigNumberY;
@@ -12,8 +12,8 @@ int main()
    // cout << bigNumberX << endl << bigNumberY << endl;
    // HugeInteger bigNumberZ = bigNumberX + bigNumberY;
    // cout << bigNumberZ;
-   bool isBigger = bigNumberX <= bigNumberY;
-   cout << isBigger << endl;
+   bool isZ = bigNumberX.isZero();
+   cout << isZ << endl;
    return 0;
 }
 

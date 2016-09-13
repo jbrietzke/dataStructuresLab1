@@ -398,6 +398,12 @@ bool HugeInteger::operator<=(const HugeInteger &op2)
    return isSmaller;
 }
 
+bool HugeInteger::isZero()
+{
+   bool isThisZero = digitsArray[0] == 0 ? true : false;
+   return isThisZero;
+}
+
 istream &operator>>(istream &input, HugeInteger &largeObject)
 {
    string x;
