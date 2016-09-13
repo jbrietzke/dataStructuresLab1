@@ -7,8 +7,11 @@ int main()
    HugeInteger bigNumberX;
    HugeInteger bigNumberY;
    cin >> bigNumberX >> bigNumberY;
-   cout << bigNumberX << endl << bigNumberY << endl;
-   HugeInteger bigNumberZ = bigNumberX + bigNumberY;
+   cout << bigNumberX * bigNumberY;
+   // cin >> bigNumberX >> bigNumberY;
+   // cout << bigNumberX << endl << bigNumberY << endl;
+   // HugeInteger bigNumberZ = bigNumberX + bigNumberY;
+   // cout << bigNumberZ;
    return 0;
 }
 

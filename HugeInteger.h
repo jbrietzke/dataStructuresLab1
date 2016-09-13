@@ -16,16 +16,21 @@ class HugeInteger
       HugeInteger();
       HugeInteger(int);
       HugeInteger(int a[], int s);
-      HugeInteger(string);
+      HugeInteger(string, bool);
       ~HugeInteger();
+      void setDigitsArray(string, bool);
       void getSize();
       void setSize();
+      string change(string);
+      string getDigits();
+
       /*This doesn;t need to be public because we are going to overload
         void display();
         overloading the '+' operator within the public because it is on the
         left side
       */
       HugeInteger operator+(const HugeInteger &);
+      HugeInteger operator*(const HugeInteger &);
    private:
       //const long MAXDIGITS;
       // static const has to exist before member initializer in constructor
