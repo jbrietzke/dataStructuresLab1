@@ -64,10 +64,10 @@ using namespace std;
 
 // TEST_CASE("*multiplying2", "works with the second number being larger")
 // {
-//    HugeInteger x("9", true);
-//    HugeInteger y("9", true);
-//    HugeInteger multiNum = x * y;
-//    REQUIRE(multiNum.getDigits() == "81");
+//    HugeInteger a("9", true);
+//    HugeInteger b("9", true);
+//    HugeInteger multiNums = a * b;
+//    REQUIRE(multiNums.getDigits() == "81");
 // }
 
 TEST_CASE("*multiplying3", "works with double digit numbers")
