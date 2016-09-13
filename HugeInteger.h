@@ -31,6 +31,8 @@ class HugeInteger
       */
       HugeInteger operator+(const HugeInteger &);
       HugeInteger operator*(const HugeInteger &);
+      bool operator==(const HugeInteger &);
+      bool operator!=(const HugeInteger &);
    private:
       //const long MAXDIGITS;
       // static const has to exist before member initializer in constructor

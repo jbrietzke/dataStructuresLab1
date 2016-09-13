@@ -332,19 +332,32 @@ HugeInteger HugeInteger::operator*(const HugeInteger &op2)
          cout << "this is final: " << final << endl;
       }
    }
-
-   // string holderString;
-   // if (linesToBeAdded[1] == "")
-   // {
-   //    holderString = "0";
-   // }else
-   // {
-   //    holderString = linesToBeAdded[1];
-   // }
-   // HugeInteger x(linesToBeAdded[0], false);
-   // HugeInteger y(holderString, false);
-   // HugeInteger result = x + y;
    return final;
+}
+
+bool HugeInteger::operator==(const HugeInteger &op2)
+{
+   bool isEqual = true;
+   if (sigDigits != op2.sigDigits)
+   {
+      isEqual = false;
+   }else
+   {
+      for (int i = 0; i < sigDigits; ++i)
+      {
+         if (digitsArray[i] != op2.digitsArray[i])
+         {
+            isEqual = false;
+            break;
+         }
+      }
+   }
+   return isEqual;
+}
+
+bool HugeInteger::operator!=(const HugeInteger &op2)
+{
+   return !(HugeInteger::operator==(op2));
 }
 
 istream &operator>>(istream &input, HugeInteger &largeObject)
