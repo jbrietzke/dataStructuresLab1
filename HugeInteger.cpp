@@ -62,6 +62,28 @@ HugeInteger::~HugeInteger()
 {
 }
 
+void HugeInteger::setDigitsArray(string numberString, bool isInOrder)
+{
+   for (int i = 0; i < 40; ++i)
+   {
+      digitsArray[i] = 0;
+   }
+   sigDigits = numberString.length();
+   if (isInOrder)
+   {
+     for (int i = 0; i < sigDigits; ++i)
+     {
+        digitsArray[i] = numberString[i] - '0';
+     }
+   }else
+   {
+      for (int i = sigDigits-1, j = 0; i >= 0; --i, j++)
+      {
+         digitsArray[j] = numberString[i] - '0';
+      }
+   }
+}
+
 void HugeInteger::getSize()
 {
    cout << MAXDIGITS << endl;
@@ -162,6 +184,7 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
 //This only works if the left side number is smaller
 HugeInteger HugeInteger::operator*(const HugeInteger &op2)
 {
+   const int MAXLINES = 20;
    int carryOver = 0;
    int individualPlaceValue;
    const int SIZE = 40;
@@ -218,24 +241,35 @@ HugeInteger HugeInteger::operator*(const HugeInteger &op2)
       {
          cout << "The lastDigit is indeed getting hit\n\n";
          cout << linesToBeAdded[i] << " That was before trimming\n";
-         linesToBeAdded[i]=linesToBeAdded[i].substr(0,sigDigits+digitSpot);
+         cout << "This is op2.sigDigits: " << op2.sigDigits << endl;
+         linesToBeAdded[i]=linesToBeAdded[i].substr(0,op2.sigDigits+digitSpot);
          cout << linesToBeAdded[i] << " That is after trimming\n";
       }
    }
    cout << "This is what the linesToBeAdded[0] looks like " << linesToBeAdded[0] << endl;
    cout << "This is what the linesToBeAdded[1] looks like " << linesToBeAdded[1] << endl;
-   string holderString;
-   if (linesToBeAdded[1] == "")
+   HugeInteger numbersToBeAdded[MAXLINES];
+   HugeInteger final("0", true);
+   for (int ii = 0; ii < op2.sigDigits; ++ii)
    {
-      holderString = "0";
-   }else
-   {
-      holderString = linesToBeAdded[1];
+      cout << "I am getting hit\n";
+      numbersToBeAdded[ii].setDigitsArray(linesToBeAdded[ii], false);
+      cout << "this is my new numbersToBeAdded: " << numbersToBeAdded[ii] << endl;
+      final = final + numbersToBeAdded[ii];
+      cout << "this is final: " << final << endl;
    }
-   HugeInteger x(linesToBeAdded[0], false);
-   HugeInteger y(holderString, false);
-   HugeInteger result = x + y;
-   return result;
+   // string holderString;
+   // if (linesToBeAdded[1] == "")
+   // {
+   //    holderString = "0";
+   // }else
+   // {
+   //    holderString = linesToBeAdded[1];
+   // }
+   // HugeInteger x(linesToBeAdded[0], false);
+   // HugeInteger y(holderString, false);
+   // HugeInteger result = x + y;
+   return final;
 }
 
 istream &operator>>(istream &input, HugeInteger &largeObject)

@@ -18,6 +18,7 @@ class HugeInteger
       HugeInteger(int a[], int s);
       HugeInteger(string, bool);
       ~HugeInteger();
+      void setDigitsArray(string, bool);
       void getSize();
       void setSize();
       string change(string);
