@@ -4,16 +4,33 @@
 using namespace std;
 int main()
 {
-   HugeInteger bigNumberX("1", true);
-   HugeInteger bigNumberY("510", true);
-   // cin >> bigNumberX >> bigNumberY;
-   // cout << bigNumberX * bigNumberY;
-   // cin >> bigNumberX >> bigNumberY;
-   // cout << bigNumberX << endl << bigNumberY << endl;
-   // HugeInteger bigNumberZ = bigNumberX + bigNumberY;
-   // cout << bigNumberZ;
-   bool isZ = bigNumberX.isZero();
-   cout << isZ << endl;
+   string blah1, blah2, op;
+   cin >> blah1 >> op >> blah2;
+   HugeInteger num1(blah1, true);
+   HugeInteger num2(blah2, true);
+   HugeInteger result;
+   if (op == "+")
+   {
+      cout << "Plus\n";
+   }else if (op == "*")
+   {
+      cout << "Times\n";
+   }else if (op == ">=")
+   {
+      cout << "Greater\n";
+   }else if (op == "<=")
+   {
+      cout << "Lesser\n";
+   }else if (op == "!=")
+   {
+      cout << "notEqual\n";
+   }else if (op == "==")
+   {
+      cout << "equal\n";
+   }else
+   {
+      cout << "In later additions of the lab this will be available\n";
+   }
    return 0;
 }
 
