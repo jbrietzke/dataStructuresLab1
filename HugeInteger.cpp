@@ -182,7 +182,7 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
    return result;
 
 }
-//This only works if the left side number is smaller
+
 HugeInteger HugeInteger::operator*(const HugeInteger &op2)
 {
    const int MAXLINES = 20;
@@ -408,17 +408,23 @@ bool HugeInteger::isZero()
 istream &operator>>(istream &input, HugeInteger &largeObject)
 {
    string x;
+   int counter = 0;
    input >> x;
    for (int i = 0; i < x.length(); ++i)
    {
-      if (!isdigit(x[i]))
+      if (x[i] == ',')
+      {
+         counter++;
+      }else if (!isdigit(x[i]))
       {
          cout << "You made a mistake and entered a letter in a number\n";
          break;
+      }else{
+         largeObject.digitsArray[i-counter] = x[i] - '0';
       }
-      largeObject.digitsArray[i] = x[i] - '0';
+
    }
-   largeObject.sigDigits = x.length();
+   largeObject.sigDigits = x.length() - counter;
    return input;
 }
 // This doesn't have to be passed by reference or value, but if by reference make const
