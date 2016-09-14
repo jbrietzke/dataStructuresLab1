@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "HugeInteger.h"
 
 using namespace std;
@@ -335,7 +336,7 @@ HugeInteger HugeInteger::operator*(const HugeInteger &op2)
    }
    return final;
 }
-// We are going to assume no negatives right now
+// We are going to assume the left hand side is bigger
 HugeInteger HugeInteger::operator-(const HugeInteger &op2)
 {
    int value = 0;
@@ -372,6 +373,28 @@ HugeInteger HugeInteger::operator-(const HugeInteger &op2)
       }
    }
    HugeInteger result(final, false);
+   return result;
+}
+// We are going to assume the divisor is a storable number and it is an int
+HugeInteger HugeInteger::operator/(const HugeInteger &op2)
+{
+   string divisorString = "";
+   for (int i = 0; i < op2.sigDigits; ++i)
+   {
+      cout << "I am being hit\n";
+      divisorString += to_string(op2.digitsArray[i]);
+   }
+   int divisorNumber;
+   istringstream(divisorString) >> divisorNumber;
+   int largeNumber;
+   int counter = 0;
+   do
+   {
+      largeNumber = digitsArray[counter];
+      cout << largeNumber + 100 << endl;
+      counter++;
+   }while(counter < sigDigits);
+   HugeInteger result;
    return result;
 }
 

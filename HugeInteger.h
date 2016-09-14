@@ -32,6 +32,7 @@ class HugeInteger
       HugeInteger operator+(const HugeInteger &);
       HugeInteger operator*(const HugeInteger &);
       HugeInteger operator-(const HugeInteger &);
+      HugeInteger operator/(const HugeInteger &);
       bool operator==(const HugeInteger &);
       bool operator!=(const HugeInteger &);
       bool operator>=(const HugeInteger &);
