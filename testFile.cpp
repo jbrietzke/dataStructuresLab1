@@ -70,11 +70,13 @@ using namespace std;
 //    REQUIRE(multiNums.getDigits() == "81");
 // }
 
-TEST_CASE("*multiplying3", "works with double digit numbers")
-{
-   HugeInteger x("10", true);
-   HugeInteger y("10", true);
-   HugeInteger multiNum = x * y;
-   REQUIRE(multiNum.getDigits() == "100");
+// TEST_CASE("*multiplying3", "works with double digit numbers")
+// {
+//    HugeInteger x("10", true);
+//    HugeInteger y("10", true);
+//    HugeInteger multiNum = x * y;
+//    REQUIRE(multiNum.getDigits() == "100");
 
-}
+// }
+
+

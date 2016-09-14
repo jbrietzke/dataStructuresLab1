@@ -335,6 +335,45 @@ HugeInteger HugeInteger::operator*(const HugeInteger &op2)
    }
    return final;
 }
+// We are going to assume no negatives right now
+HugeInteger HugeInteger::operator-(const HugeInteger &op2)
+{
+   int value = 0;
+   int carryOver = 0;
+   string final = "";
+   for (int i = sigDigits-1, j = op2.sigDigits-1; i >= 0; --i, --j)
+   {
+      if (j < 0)
+      {
+         value = digitsArray[i] + carryOver;
+      }else
+      {
+         value = digitsArray[i] - op2.digitsArray[j] + carryOver;
+      }
+      if (value < 0)
+      {
+         carryOver = -1;
+         value += 10;
+      }else
+      {
+         carryOver = 0;
+      }
+      final += to_string(value);
+   }
+   // This makes sure there are no preceding zeros
+   if (HugeInteger::operator==(op2) == true)
+   {
+      final = "0";
+   }else
+   {
+      while(final[final.length()-1] == '0')
+      {
+         final = final.substr(0, final.length()-1);
+      }
+   }
+   HugeInteger result(final, false);
+   return result;
+}
 
 bool HugeInteger::operator==(const HugeInteger &op2)
 {
@@ -412,6 +451,7 @@ istream &operator>>(istream &input, HugeInteger &largeObject)
    input >> x;
    for (int i = 0; i < x.length(); ++i)
    {
+      // This allows us to input numbers with commas
       if (x[i] == ',')
       {
          counter++;
