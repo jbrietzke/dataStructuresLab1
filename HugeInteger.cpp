@@ -381,19 +381,57 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
    string divisorString = "";
    for (int i = 0; i < op2.sigDigits; ++i)
    {
-      cout << "I am being hit\n";
+      // cout << "I am being hit\n";
       divisorString += to_string(op2.digitsArray[i]);
    }
    int divisorNumber;
    istringstream(divisorString) >> divisorNumber;
-   int largeNumber;
-   int counter = 0;
+   string largeNumberStr;
+   string numberOfTimesDivided = "";
+   int largeNumberInt;
+   string remainderStr;
+   int remainderInt;
+   int leftover = 0;
+   int totalCounter = 1;
+   int numberCounter = 0;
    do
    {
-      largeNumber = digitsArray[counter];
-      cout << largeNumber + 100 << endl;
-      counter++;
-   }while(counter < sigDigits);
+      if (leftover)
+      {
+         cout << "There is a leftover\n";
+         numberOfTimesDivided += (leftover > divisorNumber) ? to_string(leftover / divisorNumber) : "0";
+         remainderInt = leftover % divisorNumber;
+         remainderStr = to_string(leftover % divisorNumber);
+      }else
+      {
+         for (int i = numberCounter; i < totalCounter; ++i)
+         {
+            largeNumberStr += to_string(digitsArray[i]);
+            cout << "There is no leftover\n";
+         }
+         istringstream(largeNumberStr) >> largeNumberInt;
+         if (largeNumberInt / divisorNumber > 0)
+         {
+            cout << "I am bigger than the divison\n";
+            numberOfTimesDivided += to_string(largeNumberInt / divisorNumber);
+            remainderStr = (largeNumberInt % divisorNumber == 0) ? "1" : to_string(largeNumberInt % divisorNumber);
+            cout << "This is the remainderStr: " << remainderStr << endl;
+            if (totalCounter < sigDigits)
+            {
+               remainderStr += to_string(digitsArray[totalCounter]);
+               istringstream(remainderStr) >> leftover;
+               cout << "This is the leftover: " << leftover << endl;
+            }
+
+         }else
+         {
+            cout << "I am not larger than the divisor\n";
+         }
+      }
+      totalCounter++;
+      largeNumberStr = "";
+   }while(totalCounter-1 < sigDigits);
+   cout << "This is the number of times divided: " << numberOfTimesDivided << endl;
    HugeInteger result;
    return result;
 }
