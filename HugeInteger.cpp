@@ -341,7 +341,7 @@ HugeInteger HugeInteger::operator-(const HugeInteger &op2)
 {
    int value = 0;
    int carryOver = 0;
-   string final = "";
+   string final;
    for (int i = sigDigits-1, j = op2.sigDigits-1; i >= 0; --i, --j)
    {
       if (j < 0)
@@ -367,6 +367,7 @@ HugeInteger HugeInteger::operator-(const HugeInteger &op2)
       final = "0";
    }else
    {
+      // Here we are getting rid of the zeros if they are first
       while(final[final.length()-1] == '0')
       {
          final = final.substr(0, final.length()-1);
@@ -383,7 +384,7 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
    string remainderStr;
    int divisorNumber;
    int remainderInt;
-   int leftover = 0;
+   int newlyCreatedDivisibleNumber = 0;
    int totalCounter = 0;
    for (int i = 0; i < op2.sigDigits; ++i)
    {
@@ -395,11 +396,11 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
    {
       string largeNumberStr;
       int largeNumberInt;
-      if (leftover)
+      if (newlyCreatedDivisibleNumber)
       {
-         numberOfTimesDivided += (leftover >= divisorNumber) ? to_string(leftover / divisorNumber) : "0";
-         remainderInt = leftover % divisorNumber;
-         remainderStr = to_string(leftover % divisorNumber);
+         numberOfTimesDivided += (newlyCreatedDivisibleNumber >= divisorNumber) ? to_string(newlyCreatedDivisibleNumber / divisorNumber) : "0";
+         remainderInt = newlyCreatedDivisibleNumber % divisorNumber;
+         remainderStr = to_string(newlyCreatedDivisibleNumber % divisorNumber);
       }else
       {
          for (int i = 0; i < totalCounter+1; ++i)
@@ -412,7 +413,7 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
             numberOfTimesDivided += to_string(largeNumberInt / divisorNumber);
             remainderStr = (largeNumberInt % divisorNumber == 0) ? "1" : to_string(largeNumberInt % divisorNumber);
             remainderStr += to_string(digitsArray[totalCounter+1]);
-            istringstream(remainderStr) >> leftover;
+            istringstream(remainderStr) >> newlyCreatedDivisibleNumber;
          }
       }
       totalCounter++;
