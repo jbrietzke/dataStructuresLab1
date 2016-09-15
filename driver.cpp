@@ -18,6 +18,14 @@ int main()
    {
       result = op1 * op2;
       cout << "Times\n";
+   }else if(op == "-")
+   {
+      result = op1 - op2;
+      cout << "Minus\n";
+   }else if(op == "/")
+   {
+      result = op1 / op2;
+      cout << "Division\n";
    }else if (op == ">=")
    {
       answer = op1 >= op2;
@@ -40,14 +48,6 @@ int main()
    }
    cout << result << endl;
 
-   // string bigBoi;
-   // string delim = " ";
-   // cin >> bigBoi;
-   // cout << "This is bigBoi: " << bigBoi << endl;
-
-   // string token1 = bigBoi.substr(0, bigBoi.find(delim));
-   // cout << "This is token1: " << token1 << endl;
-   // cout << "This is bigBoi: " << bigBoi << endl;
 
    return 0;
 }
