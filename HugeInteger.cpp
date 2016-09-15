@@ -122,7 +122,7 @@ void HugeInteger::display(ostream &output) const
    }
    cout << endl;
 }
-
+// Need to throw in protection for overflow
 HugeInteger HugeInteger::operator+(const HugeInteger &op2)
 {
    /* Create a HugeInteger object to store the result
@@ -183,7 +183,7 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
    return result;
 
 }
-
+// Need to have check for overflow / protect against overflow
 HugeInteger HugeInteger::operator*(const HugeInteger &op2)
 {
    const int MAXLINES = 20;
@@ -378,60 +378,45 @@ HugeInteger HugeInteger::operator-(const HugeInteger &op2)
 // We are going to assume the divisor is a storable number and it is an int
 HugeInteger HugeInteger::operator/(const HugeInteger &op2)
 {
-   string divisorString = "";
-   for (int i = 0; i < op2.sigDigits; ++i)
-   {
-      // cout << "I am being hit\n";
-      divisorString += to_string(op2.digitsArray[i]);
-   }
-   int divisorNumber;
-   istringstream(divisorString) >> divisorNumber;
-   string largeNumberStr;
-   string numberOfTimesDivided = "";
-   int largeNumberInt;
+   string divisorString;
+   string numberOfTimesDivided;
    string remainderStr;
+   int divisorNumber;
    int remainderInt;
    int leftover = 0;
-   int totalCounter = 1;
-   int numberCounter = 0;
+   int totalCounter = 0;
+   for (int i = 0; i < op2.sigDigits; ++i)
+   {
+      // creating a total number that we can turn into an int
+      divisorString += to_string(op2.digitsArray[i]);
+   }
+   istringstream(divisorString) >> divisorNumber;
    do
    {
+      string largeNumberStr;
+      int largeNumberInt;
       if (leftover)
       {
-         cout << "There is a leftover\n";
-         numberOfTimesDivided += (leftover > divisorNumber) ? to_string(leftover / divisorNumber) : "0";
+         numberOfTimesDivided += (leftover >= divisorNumber) ? to_string(leftover / divisorNumber) : "0";
          remainderInt = leftover % divisorNumber;
          remainderStr = to_string(leftover % divisorNumber);
       }else
       {
-         for (int i = numberCounter; i < totalCounter; ++i)
+         for (int i = 0; i < totalCounter+1; ++i)
          {
             largeNumberStr += to_string(digitsArray[i]);
-            cout << "There is no leftover\n";
          }
          istringstream(largeNumberStr) >> largeNumberInt;
          if (largeNumberInt / divisorNumber > 0)
          {
-            cout << "I am bigger than the divison\n";
             numberOfTimesDivided += to_string(largeNumberInt / divisorNumber);
             remainderStr = (largeNumberInt % divisorNumber == 0) ? "1" : to_string(largeNumberInt % divisorNumber);
-            cout << "This is the remainderStr: " << remainderStr << endl;
-            if (totalCounter < sigDigits)
-            {
-               remainderStr += to_string(digitsArray[totalCounter]);
-               istringstream(remainderStr) >> leftover;
-               cout << "This is the leftover: " << leftover << endl;
-            }
-
-         }else
-         {
-            cout << "I am not larger than the divisor\n";
+            remainderStr += to_string(digitsArray[totalCounter+1]);
+            istringstream(remainderStr) >> leftover;
          }
       }
       totalCounter++;
-      largeNumberStr = "";
-   }while(totalCounter-1 < sigDigits);
-   cout << "This is the number of times divided: " << numberOfTimesDivided << endl;
+   }while(totalCounter < sigDigits);
    HugeInteger result(numberOfTimesDivided, true);
    return result;
 }
@@ -504,27 +489,35 @@ bool HugeInteger::isZero()
    bool isThisZero = digitsArray[0] == 0 ? true : false;
    return isThisZero;
 }
-
+// cin stops on spaces
+// We are assuming there will be a spcade in between inputs
+// We should implement a check to make sure not greater than 40 digits
+// Look into cin.get() and cin.putback()
 istream &operator>>(istream &input, HugeInteger &largeObject)
 {
    string x;
+   // The counter here is used to show how many we have skipped b/c ','
    int counter = 0;
    input >> x;
+   x = (x.length() > 40) ? x.substr(0,40) : x;
    for (int i = 0; i < x.length(); ++i)
    {
       // This allows us to input numbers with commas
       if (x[i] == ',')
       {
          counter++;
+         // This is to stop the input if the user put in a letter
       }else if (!isdigit(x[i]))
       {
-         cout << "You made a mistake and entered a letter in a number\n";
+         cout << "You made a mistake and entered a letter in a number!\n";
          break;
       }else{
+         // Turns the string into an integer
          largeObject.digitsArray[i-counter] = x[i] - '0';
       }
 
    }
+   // The significant digits = the length of string minus number of ','s
    largeObject.sigDigits = x.length() - counter;
    return input;
 }
