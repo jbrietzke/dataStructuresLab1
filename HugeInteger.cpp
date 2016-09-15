@@ -432,7 +432,7 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
       largeNumberStr = "";
    }while(totalCounter-1 < sigDigits);
    cout << "This is the number of times divided: " << numberOfTimesDivided << endl;
-   HugeInteger result;
+   HugeInteger result(numberOfTimesDivided, true);
    return result;
 }
 

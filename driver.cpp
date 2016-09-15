@@ -18,6 +18,14 @@ int main()
    {
       result = op1 * op2;
       cout << "Times\n";
+   }else if(op == "-")
+   {
+      result = op1 - op2;
+      cout << "Minus\n";
+   }else if(op == "/")
+   {
+      result = op1 / op2;
+      cout << "Division\n";
    }else if (op == ">=")
    {
       answer = op1 >= op2;
