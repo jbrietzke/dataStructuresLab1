@@ -186,41 +186,36 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
 // Need to have check for overflow / protect against overflow
 HugeInteger HugeInteger::operator*(const HugeInteger &op2)
 {
-   const int MAXLINES = 20;
    int carryOver = 0;
    int individualPlaceValue;
    const int SIZE = 40;
    string linesToBeAdded[SIZE];
-   string individualNumber = "";
+   string individualNumber;
    HugeInteger final("0", true);
-
-   if (sigDigits <= op2.sigDigits)
-   {
-      for (int i = sigDigits-1, digitSpot = 0; i >= 0; --i, digitSpot++)
+   int smallerSigDigits = (sigDigits <= op2.sigDigits) ? sigDigits : op2.sigDigits;
+   int largerSigDigits = (sigDigits > op2.sigDigits) ? sigDigits : op2.sigDigits;
+      for (int i = smallerSigDigits-1, digitSpot = 0; i >= 0; --i, digitSpot++)
       {
          for (int i = 0; i < digitSpot; ++i)
          {
             individualNumber += "0";
          }
-         for (int j = op2.sigDigits-1; j >= -1; --j)
+         for (int j = largerSigDigits-1; j >= -1; --j)
          {
-               int value = -9999;
+               int value;
                if (i < 0 && j >= 0)
                {
-                  cout << "Here\n";
-                  value = op2.digitsArray[j] + carryOver;
+                  value = (largerSigDigits == sigDigits) ? (op2.digitsArray[j] + carryOver) : (digitsArray[j] + carryOver);
                }else if(j < 0 && i >= 0 && carryOver > 0)
                {
                   value = carryOver;
-               }else if(i < 0 && j < 0)
+               }else if(i <= 0 && j < 0)
                {
-                  cout << "HereHereHere\n";
                   value = carryOver;
                }else
                {
-                  cout << "DEFDFHERE\n";
-                  value = digitsArray[i] * op2.digitsArray[j] + carryOver;
-                  cout << "Here is the val: " << digitsArray[i] << '\t'<< op2.digitsArray[j]<< '\t' << carryOver << endl;
+                  value = (largerSigDigits == sigDigits) ? digitsArray[j] * op2.digitsArray[i] + carryOver :
+                  op2.digitsArray[j] * digitsArray[i] + carryOver;
                }
                if (value >= 10)
                {
@@ -245,95 +240,15 @@ HugeInteger HugeInteger::operator*(const HugeInteger &op2)
          char lastDigit = linesToBeAdded[i].back();
          if (lastDigit == '0')
          {
-            cout << "The lastDigit is indeed getting hit\n\n";
-            cout << linesToBeAdded[i] << " That was before trimming\n";
-            cout << "This is op2.sigDigits: " << op2.sigDigits << endl;
-            linesToBeAdded[i]=linesToBeAdded[i].substr(0,op2.sigDigits+digitSpot);
-            cout << linesToBeAdded[i] << " That is after trimming\n";
+            linesToBeAdded[i]=linesToBeAdded[i].substr(0,largerSigDigits+digitSpot);
          }
       }
-      cout << "This is what the linesToBeAdded[0] looks like " << linesToBeAdded[0] << endl;
-      cout << "This is what the linesToBeAdded[1] looks like " << linesToBeAdded[1] << endl;
-      HugeInteger numbersToBeAdded[MAXLINES];
-      for (int ii = 0; ii < op2.sigDigits; ++ii)
+      HugeInteger numbersToBeAdded[SIZE];
+      for (int ii = 0; ii < smallerSigDigits; ++ii)
       {
-         cout << "I am getting hit\n";
          numbersToBeAdded[ii].setDigitsArray(linesToBeAdded[ii], false);
-         cout << "this is my new numbersToBeAdded: " << numbersToBeAdded[ii] << endl;
          final = final + numbersToBeAdded[ii];
-         cout << "this is final: " << final << endl;
       }
-   }else
-   {
-      for (int i = op2.sigDigits-1, digitSpot = 0; i >= 0; --i, digitSpot++)
-      {
-         for (int i = 0; i < digitSpot; ++i)
-         {
-            individualNumber += "0";
-         }
-         for (int j = sigDigits-1; j >= -1; --j)
-         {
-               int value = -9999;
-               if (i < 0 && j >= 0)
-               {
-                  cout << "Here\n";
-                  value = digitsArray[j] + carryOver;
-               }else if(j < 0 && i >= 0 && carryOver >= 0)
-               {
-                  value = carryOver;
-               }else if(i < 0 && j < 0)
-               {
-                  cout << "HereHereHere\n";
-                  value = carryOver;
-               }else
-               {
-                  cout << "DEFDFHERE\n";
-                  cout << "This is digitsArray[j]: " << digitsArray[j] << " this is j: " << j << endl;
-                  value = op2.digitsArray[i] * digitsArray[j] + carryOver;
-                  cout << "Here is the val: " << op2.digitsArray[i] << '\t'<< digitsArray[j]<< '\t' << carryOver << endl;
-               }
-               if (value >= 10)
-               {
-                  individualPlaceValue = value % 10;
-                  carryOver = value / 10;
-               }else
-               {
-                  individualPlaceValue = value;
-                  carryOver = 0;
-               }
-               if (individualPlaceValue > 0)
-               {
-                  individualNumber += individualPlaceValue + '0';
-               }else
-               {
-                  individualNumber += "0";
-               }
-
-         }
-         linesToBeAdded[i] = individualNumber;
-         individualNumber = "";
-         char lastDigit = linesToBeAdded[i].back();
-         if (lastDigit == '0')
-         {
-            cout << "The lastDigit is indeed getting hit\n\n";
-            cout << linesToBeAdded[i] << " That was before trimming\n";
-            cout << "This is sigDigits: " << sigDigits << endl;
-            linesToBeAdded[i]=linesToBeAdded[i].substr(0,sigDigits+digitSpot);
-            cout << linesToBeAdded[i] << " That is after trimming\n";
-         }
-      }
-      cout << "This is what the linesToBeAdded[0] looks like " << linesToBeAdded[0] << endl;
-      cout << "This is what the linesToBeAdded[1] looks like " << linesToBeAdded[1] << endl;
-      HugeInteger numbersToBeAdded[MAXLINES];
-      for (int ii = 0; ii < sigDigits; ++ii)
-      {
-         cout << "I am getting hit\n";
-         numbersToBeAdded[ii].setDigitsArray(linesToBeAdded[ii], false);
-         cout << "this is my new numbersToBeAdded: " << numbersToBeAdded[ii] << endl;
-         final = final + numbersToBeAdded[ii];
-         cout << "this is final: " << final << endl;
-      }
-   }
    return final;
 }
 // We are going to assume the left hand side is bigger
