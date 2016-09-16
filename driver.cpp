@@ -13,42 +13,39 @@ int main()
    if (op == "+")
    {
       result = op1 + op2;
-      cout << "Plus\n";
+      cout << result;
    }else if (op == "*")
    {
       result = op1 * op2;
-      cout << "Times\n";
+      cout << result;
    }else if(op == "-")
    {
       result = op1 - op2;
-      cout << "Minus\n";
+      cout << result;
    }else if(op == "/")
    {
       result = op1 / op2;
-      cout << "Division\n";
+      cout << result;
    }else if (op == ">=")
    {
       answer = op1 >= op2;
-      cout << "Greater\n";
+      cout << boolalpha << answer << endl;
    }else if (op == "<=")
    {
       answer = op1 <= op2;
-      cout << "Lesser\n";
+      cout << boolalpha << answer << endl;
    }else if (op == "!=")
    {
       answer = op1 != op2;
-      cout << "notEqual\n";
+      cout << boolalpha << answer << endl;
    }else if (op == "==")
    {
       answer = op1 == op2;
-      cout << "equal\n";
+      cout << boolalpha << answer << endl;
    }else
    {
       cout << "In later additions of the lab this will be available\n";
    }
-   cout << result << endl;
-
-
    return 0;
 }
 

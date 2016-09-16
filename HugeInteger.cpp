@@ -39,24 +39,7 @@ HugeInteger::HugeInteger(int a[], int s)
 // This constructor is getting the string in  the reverse order
 HugeInteger::HugeInteger(string numberString, bool isInOrder)
 {
-   for (int i = 0; i < 40; ++i)
-   {
-      digitsArray[i] = 0;
-   }
-   sigDigits = numberString.length();
-   if (isInOrder)
-   {
-     for (int i = 0; i < sigDigits; ++i)
-     {
-        digitsArray[i] = numberString[i] - '0';
-     }
-   }else
-   {
-      for (int i = sigDigits-1, j = 0; i >= 0; --i, j++)
-      {
-         digitsArray[j] = numberString[i] - '0';
-      }
-   }
+   HugeInteger::setDigitsArray(numberString, isInOrder);
 }
 
 HugeInteger::~HugeInteger()
@@ -128,16 +111,12 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
    /* Create a HugeInteger object to store the result
       Only on non-static methods is the *this there becuase statics are shared
    */
-   string summedNumberString = "";
+   string summedNumberString;
    int carryOver = 0;
    int biggestInt = (sigDigits >= op2.sigDigits) ? sigDigits : op2.sigDigits;
    int mySigDigs = sigDigits;
    int otherSigDigs = op2.sigDigits;
    int summedNumber[biggestInt+1];
-   for (int i = 0; i < biggestInt+1; ++i)
-   {
-      summedNumber[i] = -9999;
-   }
    // We do -1 because we need to have room for a possible carry over
    // Eventually refactor to make it more clear what is going on
    for (int i = biggestInt-1, j = 0, k = mySigDigs-1, m = otherSigDigs-1; i >= -1; i--, j++, k--, m--)
@@ -170,8 +149,6 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
    }
    for (int i = biggestInt-1, j = 0; i >= -1; i--, j++)
    {
-      // If I take out this cout the program doesn't work... I do not know why
-      //cout << "I am being called JACKSON: " <<to_string(summedNumber[j]) << endl;
       summedNumberString += to_string(summedNumber[j]);
    }
    int lastDigit = summedNumberString.length() - 1;
@@ -406,7 +383,7 @@ bool HugeInteger::isZero()
    return isThisZero;
 }
 // cin stops on spaces
-// We are assuming there will be a spcade in between inputs
+// We are assuming there will be a space in between inputs
 // We should implement a check to make sure not greater than 40 digits
 // Look into cin.get() and cin.putback()
 istream &operator>>(istream &input, HugeInteger &largeObject)
