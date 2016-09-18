@@ -1,3 +1,7 @@
+/*
+This is the driver program to test out the HugeInteger class
+The user enters an equation and then the program sends a response.
+*/
 #include <iostream>
 #include "HugeInteger.h"
 

@@ -1,3 +1,11 @@
+/*
+JACKSON BRIETZKE
+Last edited: 9/18/16
+This file contains the implementation of the declared methods and functions
+in the header file.
+There is oeprator overloading for +, -, /, *, <=, >=, ==, !=, <<, >>.
+
+*/
 #include <iostream>
 #include <sstream>
 #include "HugeInteger.h"
@@ -46,13 +54,14 @@ HugeInteger::~HugeInteger()
 {
 }
 
+// This is to set the number of an already existing HugeInteger instance
 void HugeInteger::setDigitsArray(string numberString, bool isInOrder)
 {
    for (int i = 0; i < 40; ++i)
    {
       digitsArray[i] = 0;
    }
-   sigDigits = numberString.length();
+   sigDigits = (numberString.length() <= 40) ? numberString.length() : 40;
    if (isInOrder)
    {
      for (int i = 0; i < sigDigits; ++i)
@@ -72,19 +81,7 @@ void HugeInteger::getSize()
 {
    cout << MAXDIGITS << endl;
 }
-
-string HugeInteger::getDigits()
-{
-   string result = "";
-   cout << "this is the sigDigits: " << sigDigits << endl;
-   for (int i = 0; i < sigDigits; ++i)
-   {
-      cout << sigDigits << endl;
-      result += digitsArray[i] + '0';
-   }
-   return result;
-}
-
+// reverse a string
 string HugeInteger::change(string reversedString)
 {
    string newString = "";
@@ -94,7 +91,7 @@ string HugeInteger::change(string reversedString)
    }
    return newString;
 }
-
+// cout the sigDigs of the number and the number itself
 void HugeInteger::display(ostream &output) const
 {
    output << "It has this many significant digits: " << sigDigits << endl;
@@ -106,6 +103,8 @@ void HugeInteger::display(ostream &output) const
    cout << endl;
 }
 // Need to throw in protection for overflow
+// Adds two HugeInteger instances together and return a new HugeInteger that
+// is that number
 HugeInteger HugeInteger::operator+(const HugeInteger &op2)
 {
    /* Create a HugeInteger object to store the result
@@ -114,12 +113,11 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
    string summedNumberString;
    int carryOver = 0;
    int biggestInt = (sigDigits >= op2.sigDigits) ? sigDigits : op2.sigDigits;
-   int mySigDigs = sigDigits;
-   int otherSigDigs = op2.sigDigits;
+   int leftSideSigDigits = sigDigits;
+   int rightSideSigDigits = op2.sigDigits;
    int summedNumber[biggestInt+1];
    // We do -1 because we need to have room for a possible carry over
-   // Eventually refactor to make it more clear what is going on
-   for (int i = biggestInt-1, j = 0, k = mySigDigs-1, m = otherSigDigs-1; i >= -1; i--, j++, k--, m--)
+   for (int i = biggestInt-1, j = 0, k = leftSideSigDigits-1, m = rightSideSigDigits-1; i >= -1; i--, j++, k--, m--)
    {
       int individualPlaceValue;
       if (k < 0 && m >= 0)
@@ -130,7 +128,14 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
          individualPlaceValue = digitsArray[k] + carryOver;
       }else if(k < 0 && m < 0)
       {
-         individualPlaceValue = carryOver;
+         // Some overflow protection
+         if (biggestInt == 40 && carryOver > 0)
+         {
+            cout << "Your number is too big, even for me :(\n";
+         }else
+         {
+            individualPlaceValue = carryOver;
+         }
       }else
       {
          individualPlaceValue = digitsArray[k] + op2.digitsArray[m] + carryOver;
@@ -161,6 +166,7 @@ HugeInteger HugeInteger::operator+(const HugeInteger &op2)
 
 }
 // Need to have check for overflow / protect against overflow
+// Multiplies two HugeIntegers together and returns that number as a HI
 HugeInteger HugeInteger::operator*(const HugeInteger &op2)
 {
    int carryOver = 0;
@@ -188,7 +194,15 @@ HugeInteger HugeInteger::operator*(const HugeInteger &op2)
                   value = carryOver;
                }else if(i <= 0 && j < 0)
                {
-                  value = carryOver;
+                  // Some overflow protection
+                  if (largerSigDigits == 0 && carryOver > 0)
+                  {
+                     cout << "This number is too big, even for me :(\n";
+                  }else
+                  {
+                     value = carryOver;
+                  }
+
                }else
                {
                   value = (largerSigDigits == sigDigits) ? digitsArray[j] * op2.digitsArray[i] + carryOver :
@@ -229,6 +243,7 @@ HugeInteger HugeInteger::operator*(const HugeInteger &op2)
    return final;
 }
 // We are going to assume the left hand side is bigger
+// Subtracts an HI from an HI and returns the result as a HI
 HugeInteger HugeInteger::operator-(const HugeInteger &op2)
 {
    int value = 0;

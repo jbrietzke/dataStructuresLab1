@@ -1,3 +1,7 @@
+/*
+This file is a driver program to specifically test parts of my application
+I want to test.
+*/
 #include <iostream>
 #include "HugeInteger.h"
 
