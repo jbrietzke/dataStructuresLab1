@@ -1,3 +1,12 @@
+/*
+JACKSON BRIETZKE
+This is the class definition for the HugeInteger class
+It has declarations for the methods and functions defined in the cpp file
+The HugeInteger class is designed to work with large numbers that usually
+wouldn't be able to be handled by the large int class.
+*/
+
+
 //This ensures that the header file is only included once
 #ifndef HugeInteger_H
 #define HugeInteger_H
@@ -22,7 +31,6 @@ class HugeInteger
       void getSize();
       void setSize();
       string change(string);
-      string getDigits();
 
       /*This doesn;t need to be public because we are going to overload
         void display();
