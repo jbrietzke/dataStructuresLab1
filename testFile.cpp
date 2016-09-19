@@ -81,7 +81,63 @@ TEST_CASE("*multiplying3", "works with double digit numbers")
    HugeInteger y("10", true);
    HugeInteger multiNum = x * y;
    REQUIRE(multiNum.getDigits() == "100");
+}
 
+TEST_CASE("division", "Lets see if division works")
+{
+   HugeInteger x("6", true);
+   HugeInteger y("2", true);
+   HugeInteger diviNum = x / y;
+   SECTION("works with single digit numbers")
+   {
+     CHECK(diviNum.getDigits() == "3");
+   }
+
+   SECTION("works with one double digit number")
+   {
+     x.setDigitsArray("10", true);
+     y.setDigitsArray("2", true);
+     diviNum = x / y;
+     CHECK(diviNum.getDigits() == "5");
+   }
+   SECTION("Works with a three digit number")
+   {
+    x.setDigitsArray("123", true);
+    y.setDigitsArray("10", true);
+    diviNum = x / y;
+    CHECK(diviNum.getDigits() == "12");
+   }
+   SECTION("Does not work with smaller number as first argument")
+   {
+    diviNum = y / x;
+    CHECK(diviNum.getDigits() != "0");
+   }
+   SECTION("Works with large large divisble number")
+   {
+    x.setDigitsArray("13875", true);
+    y.setDigitsArray("13", true);
+    HugeInteger multiNum = x * y;
+    diviNum = multiNum / y;
+    CHECK(diviNum.getDigits() == "13875");
+   }
+}
+
+TEST_CASE("subtraction", "Let see if subracting works")
+{
+  HugeInteger x("10", true);
+  HugeInteger y("2", true);
+  HugeInteger subtrNum = x - y;
+  SECTION("small number subtraction")
+  {
+    CHECK(subtrNum.getDigits() == "8");
+  }
+  SECTION("double digit number subtraction")
+  {
+    x.setDigitsArray("100", true);
+    y.setDigitsArray("96", true);
+    subtrNum = x - y;
+    CHECK(subtrNum.getDigits() == "4");
+  }
 }
 
 

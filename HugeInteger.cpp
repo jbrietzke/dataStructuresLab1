@@ -81,6 +81,18 @@ void HugeInteger::getSize()
 {
    cout << MAXDIGITS << endl;
 }
+
+string HugeInteger::getDigits()
+{
+   string result = "";
+   cout << "this is the sigDigits: " << sigDigits << endl;
+   for (int i = 0; i < sigDigits; ++i)
+   {
+      cout << sigDigits << endl;
+      result += digitsArray[i] + '0';
+   }
+   return result;
+}
 // reverse a string
 string HugeInteger::change(string reversedString)
 {

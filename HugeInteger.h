@@ -31,6 +31,7 @@ class HugeInteger
       void getSize();
       void setSize();
       string change(string);
+      string getDigits();
 
       /*This doesn;t need to be public because we are going to overload
         void display();
