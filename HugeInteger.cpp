@@ -85,10 +85,8 @@ void HugeInteger::getSize()
 string HugeInteger::getDigits()
 {
    string result = "";
-   cout << "this is the sigDigits: " << sigDigits << endl;
    for (int i = 0; i < sigDigits; ++i)
    {
-      cout << sigDigits << endl;
       result += digitsArray[i] + '0';
    }
    return result;
@@ -317,7 +315,6 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
       int largeNumberInt;
       if (newlyCreatedDivisibleNumber)
       {
-         cout << "newly crewated number: " << newlyCreatedDivisibleNumber << endl;
          numberOfTimesDivided += (newlyCreatedDivisibleNumber >= divisorNumber) ? to_string(newlyCreatedDivisibleNumber / divisorNumber) : "0";
          remainderStr = to_string(newlyCreatedDivisibleNumber % divisorNumber);
          remainderStr += to_string(digitsArray[totalCounter+1]);
@@ -327,7 +324,6 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
       {
          for (int i = 0; i < totalCounter+1; ++i)
          {
-            cout << "How many times am I hit\n";
             largeNumberStr += to_string(digitsArray[i]);
          }
          istringstream(largeNumberStr) >> largeNumberInt;
