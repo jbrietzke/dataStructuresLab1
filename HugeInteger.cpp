@@ -6,11 +6,8 @@ in the header file.
 There is oeprator overloading for +, -, /, *, <=, >=, ==, !=, <<, >>.
 
 */
-#include <iostream>
 #include <sstream>
 #include "HugeInteger.h"
-
-using namespace std;
 
 /*To connect this to the header file we use the name of the class, scope resolution
  operator, and the name of the method

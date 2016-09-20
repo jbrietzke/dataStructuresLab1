@@ -10,7 +10,7 @@ wouldn't be able to be handled by the large int class.
 //This ensures that the header file is only included once
 #ifndef HugeInteger_H
 #define HugeInteger_H
-
+#include <iostream>
 using namespace std;
 // Name of the directive should be the name of the class
 class HugeInteger
