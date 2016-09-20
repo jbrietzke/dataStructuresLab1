@@ -112,13 +112,20 @@ TEST_CASE("division", "Lets see if division works")
     diviNum = y / x;
     CHECK(diviNum.getDigits() != "0");
    }
-   SECTION("Works with large large divisble number")
+   SECTION("Works with 99 / 9 divisble number")
    {
-    x.setDigitsArray("13875", true);
-    y.setDigitsArray("13", true);
-    HugeInteger multiNum = x * y;
-    diviNum = multiNum / y;
-    CHECK(diviNum.getDigits() == "13875");
+    x.setDigitsArray("99", true);
+    y.setDigitsArray("9", true);
+    diviNum = x / y;
+    CHECK(diviNum.getDigits() == "11");
+   }
+   SECTION("works with large numbers")
+   {
+    x.setDigitsArray("95832", true);
+    y.setDigitsArray("12", true);
+    diviNum = x / y;
+    CHECK(diviNum.getDigits() == "7986");
+
    }
 }
 

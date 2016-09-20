@@ -317,20 +317,24 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
       int largeNumberInt;
       if (newlyCreatedDivisibleNumber)
       {
+         cout << "newly crewated number: " << newlyCreatedDivisibleNumber << endl;
          numberOfTimesDivided += (newlyCreatedDivisibleNumber >= divisorNumber) ? to_string(newlyCreatedDivisibleNumber / divisorNumber) : "0";
-         remainderInt = newlyCreatedDivisibleNumber % divisorNumber;
          remainderStr = to_string(newlyCreatedDivisibleNumber % divisorNumber);
+         remainderStr += to_string(digitsArray[totalCounter+1]);
+         istringstream(remainderStr) >> newlyCreatedDivisibleNumber;
+
       }else
       {
          for (int i = 0; i < totalCounter+1; ++i)
          {
+            cout << "How many times am I hit\n";
             largeNumberStr += to_string(digitsArray[i]);
          }
          istringstream(largeNumberStr) >> largeNumberInt;
          if (largeNumberInt / divisorNumber > 0)
          {
             numberOfTimesDivided += to_string(largeNumberInt / divisorNumber);
-            remainderStr = (largeNumberInt % divisorNumber == 0) ? "1" : to_string(largeNumberInt % divisorNumber);
+            remainderStr = (largeNumberInt % divisorNumber == 0) ? "0" : to_string(largeNumberInt % divisorNumber);
             remainderStr += to_string(digitsArray[totalCounter+1]);
             istringstream(remainderStr) >> newlyCreatedDivisibleNumber;
          }
