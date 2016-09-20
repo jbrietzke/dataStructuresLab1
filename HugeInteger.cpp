@@ -6,11 +6,8 @@ in the header file.
 There is oeprator overloading for +, -, /, *, <=, >=, ==, !=, <<, >>.
 
 */
-#include <iostream>
 #include <sstream>
 #include "HugeInteger.h"
-
-using namespace std;
 
 /*To connect this to the header file we use the name of the class, scope resolution
  operator, and the name of the method
@@ -85,10 +82,8 @@ void HugeInteger::getSize()
 string HugeInteger::getDigits()
 {
    string result = "";
-   cout << "this is the sigDigits: " << sigDigits << endl;
    for (int i = 0; i < sigDigits; ++i)
    {
-      cout << sigDigits << endl;
       result += digitsArray[i] + '0';
    }
    return result;
@@ -318,8 +313,10 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
       if (newlyCreatedDivisibleNumber)
       {
          numberOfTimesDivided += (newlyCreatedDivisibleNumber >= divisorNumber) ? to_string(newlyCreatedDivisibleNumber / divisorNumber) : "0";
-         remainderInt = newlyCreatedDivisibleNumber % divisorNumber;
          remainderStr = to_string(newlyCreatedDivisibleNumber % divisorNumber);
+         remainderStr += to_string(digitsArray[totalCounter+1]);
+         istringstream(remainderStr) >> newlyCreatedDivisibleNumber;
+
       }else
       {
          for (int i = 0; i < totalCounter+1; ++i)
@@ -330,7 +327,7 @@ HugeInteger HugeInteger::operator/(const HugeInteger &op2)
          if (largeNumberInt / divisorNumber > 0)
          {
             numberOfTimesDivided += to_string(largeNumberInt / divisorNumber);
-            remainderStr = (largeNumberInt % divisorNumber == 0) ? "1" : to_string(largeNumberInt % divisorNumber);
+            remainderStr = (largeNumberInt % divisorNumber == 0) ? "0" : to_string(largeNumberInt % divisorNumber);
             remainderStr += to_string(digitsArray[totalCounter+1]);
             istringstream(remainderStr) >> newlyCreatedDivisibleNumber;
          }

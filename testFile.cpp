@@ -112,13 +112,20 @@ TEST_CASE("division", "Lets see if division works")
     diviNum = y / x;
     CHECK(diviNum.getDigits() != "0");
    }
-   SECTION("Works with large large divisble number")
+   SECTION("Works with 99 / 9 divisble number")
    {
-    x.setDigitsArray("13875", true);
-    y.setDigitsArray("13", true);
-    HugeInteger multiNum = x * y;
-    diviNum = multiNum / y;
-    CHECK(diviNum.getDigits() == "13875");
+    x.setDigitsArray("99", true);
+    y.setDigitsArray("9", true);
+    diviNum = x / y;
+    CHECK(diviNum.getDigits() == "11");
+   }
+   SECTION("works with large numbers")
+   {
+    x.setDigitsArray("95832", true);
+    y.setDigitsArray("12", true);
+    diviNum = x / y;
+    CHECK(diviNum.getDigits() == "7986");
+
    }
 }
 
@@ -137,6 +144,49 @@ TEST_CASE("subtraction", "Let see if subracting works")
     y.setDigitsArray("96", true);
     subtrNum = x - y;
     CHECK(subtrNum.getDigits() == "4");
+  }
+  SECTION("subtracting zeros")
+  {
+    x.setDigitsArray("100", true);
+    y.setDigitsArray("0", true);
+    subtrNum = x - y;
+    CHECK(subtrNum.getDigits() == "100");
+  }
+  SECTION("subtracting works with very large numbers")
+  {
+    x.setDigitsArray("1919128273746456", true);
+    y.setDigitsArray("56473829", true);
+    subtrNum = x - y;
+    CHECK(subtrNum.getDigits() == "1919128217272627");
+  }
+}
+
+TEST_CASE("Checking comparison operands", "Make sure they are all working")
+{
+  HugeInteger x, y;
+  SECTION(">=")
+  {
+    x.setDigitsArray("891", true);
+    y.setDigitsArray("199", true);
+    CHECK((x >= y) == true);
+    CHECK((y >= x) == false);
+  }
+  SECTION("<=")
+  {
+    x.setDigitsArray("1099", true);
+    y.setDigitsArray("45", true);
+    CHECK((x <= y ) == false);
+    CHECK((y <= x) == true);
+  }
+  SECTION("== && !=")
+  {
+    x.setDigitsArray("555", true);
+    y.setDigitsArray("555", true);
+    CHECK((x == y) == true);
+    CHECK((x != y) == false);
+    x.setDigitsArray("554", true);
+    CHECK((x == y) == false);
+    CHECK((x != y) == true);
   }
 }
 

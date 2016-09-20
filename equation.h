@@ -1,3 +1,8 @@
+#ifndef EQUATION_H
+#define EQUATION_H
+#include "HugeInteger.h"
+#include <iostream>
+
 class Equation
 {
    //overload the input and output
@@ -7,6 +12,8 @@ class Equation
    void calculate();
   private:
    HugeInteger op1, op2;
-   char operator;
+   char operator1;
    HugeInteger result;
 };
+
+#endif
