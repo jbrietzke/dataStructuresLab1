@@ -8,6 +8,7 @@ There is oeprator overloading for +, -, /, *, <=, >=, ==, !=, <<, >>.
 */
 #include <sstream>
 #include "HugeInteger.h"
+#include <iostream>
 
 /*To connect this to the header file we use the name of the class, scope resolution
  operator, and the name of the method
@@ -101,13 +102,14 @@ string HugeInteger::change(string reversedString)
 // cout the sigDigs of the number and the number itself
 void HugeInteger::display(ostream &output) const
 {
-   output << "It has this many significant digits: " << sigDigits << endl;
+
    output << "The number is: ";
    for (int i = 0; i < sigDigits; ++i)
    {
       output << digitsArray[i];
    }
    cout << endl;
+   output << "It has this many significant digits: " << sigDigits << endl;
 }
 // Need to throw in protection for overflow
 // Adds two HugeInteger instances together and return a new HugeInteger that

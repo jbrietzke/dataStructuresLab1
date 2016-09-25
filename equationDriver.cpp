@@ -3,16 +3,28 @@ Working with class composition because it is composed of other objects
 Eventually move to pointers... For everything
 */
 #include <iostream>
-#include "HugeInteger.h"
 #include "Equation.h"
+#include "HugeInteger.h"
+#include "HugeInteger.cpp"
 
 using namespace std;
 
-int main(int argc, char const *argv[])
+int main()
 {
-   Equation eq;
-   // cin >> eq;
-   // equation.calculate();
-   // cout << eq;
+   bool isValidEquation = true;
+   do
+   {
+      Equation eq;
+      cout << "Please enter your Equation: \n";
+      cin >> eq;
+      isValidEquation = eq.validate();
+      if (isValidEquation)
+      {
+         eq.calculate();
+         cout << eq;
+      }
+   }while(isValidEquation);
+   cout << "Thank you for using my application\n";
+
    return 0;
 }
