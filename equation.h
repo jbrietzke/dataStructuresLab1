@@ -1,3 +1,10 @@
+/*
+This is the equation class
+It has two numeric inputs (op1, op2)
+It has an operator to act on the input (op)
+And it can return the result of the equation (calculate)
+*/
+
 #ifndef EQUATION_H
 #define EQUATION_H
 #include "HugeInteger.h"
