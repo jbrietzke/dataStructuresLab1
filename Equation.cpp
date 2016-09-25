@@ -2,9 +2,9 @@
 
 Equation::Equation()
 {
-   cout << "We are in the contructor\n";
-}
 
+}
+// Invokes the overloaded operator in the HugeInteger class corresponding to input
 void Equation::calculate()
 {
    if (op == "+")
@@ -37,6 +37,7 @@ void Equation::calculate()
    }
 }
 
+// Makes sure the equation is valid and not just zeros
 bool Equation::validate()
 {
    bool response = true;
@@ -52,7 +53,10 @@ istream &operator>>(istream &input, Equation &myEquation)
    input >> myEquation.op1 >> myEquation.op >> myEquation.op2;
    return input;
 }
+
 // This doesn't have to be passed by reference or value, but if by reference make const
+// Becuasue some operations are true/false and others are numbers the outputs are different
+// Do to that we put that check of output in the overloaded function
 ostream &operator<<(ostream &output, const Equation &myEquation)
 {
    if (myEquation.op.length() > 1)
